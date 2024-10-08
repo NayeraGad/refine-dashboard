@@ -122,11 +122,7 @@ export const AccountSettings = ({ opened, setOpened, userId }: Props) => {
         }}
       >
         <Text strong>Account Settings</Text>
-        <Button
-          type="text"
-          icon={<CloseOutlined />}
-          onClick={() => closeModal()}
-        />
+        <Button type="text" icon={<CloseOutlined />} onClick={closeModal} />
       </div>
       <div
         style={{
@@ -134,7 +130,7 @@ export const AccountSettings = ({ opened, setOpened, userId }: Props) => {
         }}
       >
         <Card>
-          <Form {...formProps} layout="vertical">
+          <Form {...formProps} layout="vertical" form={formProps.form}>
             <CustomAvatar
               shape="square"
               src={avatarUrl}
