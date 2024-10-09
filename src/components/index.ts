@@ -2,6 +2,7 @@
 import DealsChart from "./homeComponents/DealsChart";
 import UpcomingEvents from "./homeComponents/UpcomingEvents";
 import DashboardTotalCountCards from "./homeComponents/DashboardTotalCountCards";
+import DashboardLatestActivities from "./homeComponents/DashboardLatestActivities";
 
 // Skeletons
 import AccordionHeaderSkeleton from "./skeleton/accordion-header";
@@ -14,6 +15,7 @@ export {
   DealsChart,
   UpcomingEvents,
   DashboardTotalCountCards,
+  DashboardLatestActivities,
   AccordionHeaderSkeleton,
   KanbanColumnSkeleton,
   LatestActivitiesSkeleton,
