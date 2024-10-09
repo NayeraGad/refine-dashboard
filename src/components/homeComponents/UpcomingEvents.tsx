@@ -4,9 +4,36 @@ import React, { useState } from "react";
 import { Text } from "../text";
 import UpcomingEventsSkeleton from "../skeleton/upcoming-events";
 import { getDate } from "@/Utilities";
+import { useList } from "@refinedev/core";
+import { DASHBOARD_CALENDAR_UPCOMING_EVENTS_QUERY } from "@/graphql/queries";
+import dayjs from "dayjs";
 
 const UpcomingEvents = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  // useList is an extended version of TanStack query's 'useQuery'
+  const { data, isLoading } = useList({
+    resource: "events",
+    pagination: { pageSize: 5 },
+    sorters: [
+      {
+        field: "startDate",
+        order: "asc",
+      },
+    ],
+    filters: [
+      {
+        field: "startDate",
+        operator: "gte",
+        value: dayjs().format("YYYY-MM-DD"),
+      },
+    ],
+    meta: {
+      // Mock database created by refine
+      gqlQuery: DASHBOARD_CALENDAR_UPCOMING_EVENTS_QUERY,
+    },
+  });
+
+  console.log(data);
+
   return (
     <Card
       styles={{ header: { padding: "8px 16px" }, body: { padding: "0 1rem" } }}
@@ -31,7 +58,7 @@ const UpcomingEvents = () => {
       ) : (
         <List
           itemLayout="horizontal"
-          dataSource={[]}
+          dataSource={data?.data || []}
           renderItem={(item) => {
             const renderDate = getDate(item.startDate, item.endDate);
             return (
@@ -47,6 +74,19 @@ const UpcomingEvents = () => {
             );
           }}
         ></List>
+      )}
+
+      {!isLoading && data?.data.length === 0 && (
+        <span
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "220px",
+          }}
+        >
+          No Upcoming Events
+        </span>
       )}
     </Card>
   );

@@ -15,7 +15,7 @@ export const Home = () => {
           xs={24}
           sm={24}
           xl={8}
-          style={{ height: "460px", backgroundColor: "cyan" }}
+          style={{ height: "460px" }}
         >
           <UpcomingEvents />
         </Col>
