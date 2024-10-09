@@ -23,8 +23,8 @@ export const Home = () => {
         <Col
           xs={24}
           sm={24}
-          xl={8}
-          style={{ height: "460px", backgroundColor: "turquoise" }}
+          xl={16}
+          style={{ height: "460px" }}
         >
           <DealsChart />
         </Col>

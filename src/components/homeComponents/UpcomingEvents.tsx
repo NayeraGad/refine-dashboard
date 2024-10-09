@@ -31,9 +31,7 @@ const UpcomingEvents = () => {
       gqlQuery: DASHBOARD_CALENDAR_UPCOMING_EVENTS_QUERY,
     },
   });
-
-  console.log(data);
-
+  
   return (
     <Card
       styles={{ header: { padding: "8px 16px" }, body: { padding: "0 1rem" } }}
