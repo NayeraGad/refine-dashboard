@@ -27,7 +27,7 @@ const DashboardLatestActivities = () => {
 
   const dealIds = audit?.data?.map((audit) => audit?.targetId);
 
-  const { data: deals, isLoading: isLoadingDeals } = useList({
+  const { data: deals } = useList({
     resource: "deals",
     meta: {
       gqlQuery: DASHBOARD_LATEST_ACTIVITIES_DEALS_QUERY,
@@ -52,7 +52,6 @@ const DashboardLatestActivities = () => {
     return null;
   }
 
-  const isLoading = false;
   return (
     <Card
       styles={{ header: { padding: "16px" }, body: { padding: "0 1rem" } }}
@@ -65,7 +64,7 @@ const DashboardLatestActivities = () => {
         </div>
       }
     >
-      {isLoading ? (
+      {isLoadingAudit ? (
         <List
           itemLayout="horizontal"
           dataSource={Array.from({ length: 5 }).map((_, i) => ({
@@ -94,7 +93,10 @@ const DashboardLatestActivities = () => {
                     />
                   }
                   description={
-                    <Space size={4} style={{ display: 'flex', flexWrap: 'wrap'}}>
+                    <Space
+                      size={4}
+                      style={{ display: "flex", flexWrap: "wrap" }}
+                    >
                       <Text strong>{item.user?.name}</Text>
 
                       <Text>
@@ -105,7 +107,7 @@ const DashboardLatestActivities = () => {
 
                       <Text>deal {item.action === "CREATE" ? "in" : "to"}</Text>
 
-                      <Text strong> {deal?.stage?.title || 'Unassigned'} </Text>
+                      <Text strong> {deal?.stage?.title || "Unassigned"} </Text>
                     </Space>
                   }
                 />

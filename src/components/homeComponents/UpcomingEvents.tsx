@@ -1,6 +1,6 @@
+import React from "react";
 import { CalendarOutlined } from "@ant-design/icons";
 import { Badge, Card, List } from "antd";
-import React, { useState } from "react";
 import { Text } from "../text";
 import UpcomingEventsSkeleton from "../skeleton/upcoming-events";
 import { getDate } from "@/Utilities";
@@ -31,7 +31,7 @@ const UpcomingEvents = () => {
       gqlQuery: DASHBOARD_CALENDAR_UPCOMING_EVENTS_QUERY,
     },
   });
-  
+
   return (
     <Card
       styles={{ header: { padding: "8px 16px" }, body: { padding: "0 1rem" } }}
