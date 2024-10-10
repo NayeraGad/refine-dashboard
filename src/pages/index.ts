@@ -4,6 +4,5 @@ export * from "./forgotPassword";
 export * from "./home";
 export * from "./companies/index";
 export * from "./companies/Create";
-export * from "./companies/Delete";
-export * from "./companies/Update";
+export * from "./companies/Edit";
 export * from "./tasks";

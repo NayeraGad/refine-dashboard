@@ -1,14 +1,20 @@
-import {
-  Authenticated,
-  Refine,
-} from "@refinedev/core";
+import { Authenticated, Refine } from "@refinedev/core";
 import { DevtoolsPanel, DevtoolsProvider } from "@refinedev/devtools";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
 
 import { useNotificationProvider } from "@refinedev/antd";
 import "@refinedev/antd/dist/reset.css";
 
-import { Home, Login, Register, ForgotPassword, Companies, Tasks, Create } from "./pages";
+import {
+  Home,
+  Login,
+  Register,
+  ForgotPassword,
+  Companies,
+  Tasks,
+  Create,
+  EditPage,
+} from "./pages";
 
 import { authProvider, dataProvider, liveProvider } from "./providers";
 import routerBindings, {
@@ -62,10 +68,13 @@ function App() {
                     }
                   >
                     <Route index element={<Home />} />
+
                     <Route path="/companies">
                       <Route index element={<Companies />} />
                       <Route path="new" element={<Create />} />
+                      <Route path="edit/:id" element={<EditPage />} />
                     </Route>
+
                     <Route path="/tasks" element={<Tasks />} />
                   </Route>
                 </Routes>
