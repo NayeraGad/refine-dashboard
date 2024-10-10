@@ -8,7 +8,7 @@ import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
 import { useNotificationProvider } from "@refinedev/antd";
 import "@refinedev/antd/dist/reset.css";
 
-import { Home, Login, Register, ForgotPassword } from "./pages";
+import { Home, Login, Register, ForgotPassword, Companies, Tasks } from "./pages";
 
 import { authProvider, dataProvider, liveProvider } from "./providers";
 import routerBindings, {
@@ -62,6 +62,8 @@ function App() {
                     }
                   >
                     <Route index element={<Home />} />
+                    <Route path="/companies" element={<Companies />} />
+                    <Route path="/tasks" element={<Tasks />} />
                   </Route>
                 </Routes>
                 <RefineKbar />
