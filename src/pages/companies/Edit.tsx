@@ -23,6 +23,7 @@ import {
   industryOptions,
 } from "@/constants";
 import { HttpError } from "@refinedev/core";
+import ContactsTable from "./ContactsTable";
 
 export const EditPage = () => {
   const { formProps, saveButtonProps, formLoading, query } = useForm<
@@ -119,6 +120,10 @@ export const EditPage = () => {
               </Form.Item>
             </Form>
           </Edit>
+        </Col>
+
+        <Col xs={24} xl={12}>
+          <ContactsTable />
         </Col>
       </Row>
     </div>

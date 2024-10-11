@@ -25,6 +25,7 @@ export const CREATE_COMPANY_MUTATION = gql`
       salesOwner {
         id
       }
+      totalRevenue
     }
   }
 `;

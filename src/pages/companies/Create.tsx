@@ -1,6 +1,6 @@
 import React from "react";
 import { Companies } from ".";
-import { Form, Input, Modal, Select } from "antd";
+import { Form, Input, InputNumber, Modal, Select } from "antd";
 import { useModalForm, useSelect } from "@refinedev/antd";
 import { useGo } from "@refinedev/core";
 import { CREATE_COMPANY_MUTATION } from "@/graphql/mutations";
