@@ -75,7 +75,9 @@ function App() {
                       <Route path="edit/:id" element={<EditPage />} />
                     </Route>
 
-                    <Route path="/tasks" element={<Tasks />} />
+                    <Route path="/tasks">
+                      <Route index element={<Tasks />} />
+                    </Route>
                   </Route>
                 </Routes>
                 <RefineKbar />
