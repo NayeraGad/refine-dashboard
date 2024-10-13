@@ -1,8 +1,29 @@
-import { Button, Card, ConfigProvider, Dropdown, MenuProps, theme } from "antd";
-import React, { useMemo } from "react";
+import React, { memo, useMemo } from "react";
+import {
+  Button,
+  Card,
+  ConfigProvider,
+  Dropdown,
+  MenuProps,
+  Space,
+  Tag,
+  theme,
+  Tooltip,
+} from "antd";
 import { Text } from "../text";
-import { DeleteOutlined, EyeOutlined, MoreOutlined } from "@ant-design/icons";
+import {
+  ClockCircleOutlined,
+  DeleteOutlined,
+  EyeOutlined,
+  MoreOutlined,
+} from "@ant-design/icons";
+import { TextIcon } from "../TextIcon";
+import dayjs from "dayjs";
+import { getDateColor } from "@/Utilities";
+import CustomAvatar from "../CustomAvatar";
+import { User } from "@/graphql/schema.types";
 
+// Define the props type for the ProjectCard component
 type Props = {
   id: string;
   title: string;
@@ -11,13 +32,15 @@ type Props = {
   users?: {
     id: string;
     name: string;
-    avatarUrl: string;
+    avatarUrl?: User['avatarUrl'];
   }[];
 };
 
-const ProjectCard = ({ id, title, dueDate, users }: Props) => {
+// Main ProjectCard component
+const ProjectCard = ({ id, title, dueDate, users, updatedAt }: Props) => {
   const { token } = theme.useToken();
 
+  // Memoized dropdown menu items for card actions
   const dropdownItems = useMemo(() => {
     const dropdownItems: MenuProps["items"] = [
       {
@@ -25,6 +48,7 @@ const ProjectCard = ({ id, title, dueDate, users }: Props) => {
         label: "View card",
         icon: <EyeOutlined />,
         onClick: () => {
+          // TODO Handle edit action
           edit();
         },
       },
@@ -33,6 +57,7 @@ const ProjectCard = ({ id, title, dueDate, users }: Props) => {
         label: "Delete card",
         danger: true,
         icon: <DeleteOutlined />,
+        // Todo: Handle delete action
         onClick: () => {},
       },
     ];
@@ -40,6 +65,19 @@ const ProjectCard = ({ id, title, dueDate, users }: Props) => {
     return dropdownItems;
   }, []);
 
+  // Memoized due date options for displaying the due date
+  const dueDateOptions = useMemo(() => {
+    if (!dueDate) return null;
+
+    const date = dayjs(dueDate);
+
+    return {
+      color: getDateColor({ date: dueDate }) as string,
+      text: date.format("MMM DD"), // Format due date
+    };
+  }, [dueDate]);
+
+  // TODO: Placeholder function for editing the card
   const edit = () => {};
 
   return (
@@ -58,7 +96,7 @@ const ProjectCard = ({ id, title, dueDate, users }: Props) => {
       <Card
         size="small"
         title={<Text ellipsis={{ tooltip: title }}>{title}</Text>}
-        onClick={() => edit()}
+        onClick={() => edit()} // Handle click on card to edit
         extra={
           <Dropdown
             trigger={["click"]}
@@ -73,17 +111,80 @@ const ProjectCard = ({ id, title, dueDate, users }: Props) => {
               shape="circle"
               type="text"
               onPointerDown={(e) => {
-                e.stopPropagation();
+                e.stopPropagation(); // Prevent click event from bubbling up
               }}
               onClick={(e) => {
-                e.stopPropagation();
+                e.stopPropagation(); // Prevent click event from bubbling up
               }}
             />
           </Dropdown>
         }
-      ></Card>
+      >
+        {/* Card Body */}
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            gap: "8px",
+          }}
+        >
+          <TextIcon style={{ marginRight: "4px" }} />
+
+          {dueDateOptions && (
+            <Tag
+              icon={<ClockCircleOutlined style={{ fontSize: "12px" }} />}
+              style={{
+                marginInlineEnd: "0",
+                padding: "0 4px",
+                backgroundColor:
+                  dueDateOptions.color === "default" ? "transparent" : "unset",
+              }}
+              color={dueDateOptions.color}
+              bordered={dueDateOptions.color !== "default"}
+            >
+              {/* Display due date text */}
+              {dueDateOptions.text}
+            </Tag>
+          )}
+
+          {!!users?.length && (
+            <Space
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginRight: "0",
+                marginLeft: "auto",
+              }}
+              size={4}
+              wrap
+              direction="horizontal"
+            >
+              {users.map((user) => (
+                <Tooltip placement="top" title={user.name} key={user.id}>
+                  <CustomAvatar
+                    name={user.name}
+                    shape="circle"
+                    src={user.avatarUrl}
+                  />
+                </Tooltip>
+              ))}
+            </Space>
+          )}
+        </div>
+      </Card>
     </ConfigProvider>
   );
 };
 
 export default ProjectCard;
+
+export const ProjectCardMemo = memo(ProjectCard, (prev, next) => {
+  return (
+    prev.users?.length === next.users?.length &&
+    prev.id === next.id &&
+    prev.title === next.title &&
+    prev.dueDate === next.dueDate &&
+    prev.updatedAt === next.updatedAt
+  );
+});

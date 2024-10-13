@@ -10,6 +10,7 @@ import { KanbanBoard } from "./kanban/KanbanBoardContainer";
 import KanbanColumn from "./kanban/KanbanColumn";
 import KanbanItem from "./kanban/KanbanItem";
 import ProjectCard from "./kanban/ProjectCard";
+import KanbanAddCard from "./kanban/KanbanAddCard";
 
 // Skeletons
 import AccordionHeaderSkeleton from "./skeleton/accordion-header";

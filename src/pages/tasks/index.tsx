@@ -3,8 +3,12 @@ import {
   KanbanBoard,
   KanbanColumn,
   KanbanItem,
-  ProjectCard,
+  KanbanColumnSkeleton,
+  ProjectCardSkeleton,
 } from "@/components";
+import KanbanAddCard from "@/components/kanban/KanbanAddCard";
+import { ProjectCardMemo } from "@/components/kanban/ProjectCard";
+import { PageSkeleton } from "@/components/skeleton/KanbanPageSkeleton";
 import { TASK_STAGES_QUERY, TASKS_QUERY } from "@/graphql/queries";
 import { TaskStage } from "@/graphql/schema.types";
 import { TasksQuery } from "@/graphql/types";
@@ -64,7 +68,9 @@ export const Tasks = () => {
 
     const grouped: TaskStage[] = stages.data.map((stage) => ({
       ...stage,
-      tasks: tasks?.data.filter((task) => task.stageId?.toString() === stage.id),
+      tasks: tasks?.data.filter(
+        (task) => task.stageId?.toString() === stage.id
+      ),
     }));
 
     return {
@@ -74,6 +80,10 @@ export const Tasks = () => {
   }, [stages, tasks]);
 
   const handleAddCard = (args: { stageId: string }) => {};
+
+  if (isLoading || isLoadingStages) {
+    return <PageSkeleton />;
+  }
 
   return (
     <>
@@ -91,12 +101,33 @@ export const Tasks = () => {
                 id={task.id}
                 data={{ ...tasks, stageId: "unassigned" }}
               >
-                <ProjectCard {...task} dueDate={task.dueDate || undefined } />
+                <ProjectCardMemo
+                  {...task}
+                  dueDate={task.dueDate || undefined}
+                />
               </KanbanItem>
             ))}
+
+            {!taskStages.unassignedStage.length && (
+              <KanbanAddCard
+                onClick={() => handleAddCard({ stageId: "unassigned" })}
+              />
+            )}
           </KanbanColumn>
+
+          {taskStages.columns?.map((column) => (
+            <KanbanColumn
+              key={column.id}
+              id={column.id}
+              title={column.title}
+              count={column.tasks.length}
+              onAddClick={() => handleAddCard({ stageId: column.id })}
+            ></KanbanColumn>
+          ))}
         </KanbanBoard>
       </KanbanBoardContainer>
     </>
   );
 };
+
+
