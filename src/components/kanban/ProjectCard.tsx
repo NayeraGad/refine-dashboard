@@ -22,6 +22,7 @@ import dayjs from "dayjs";
 import { getDateColor } from "@/Utilities";
 import CustomAvatar from "../CustomAvatar";
 import { User } from "@/graphql/schema.types";
+import { useDelete, useNavigation } from "@refinedev/core";
 
 // Define the props type for the ProjectCard component
 type Props = {
@@ -32,13 +33,17 @@ type Props = {
   users?: {
     id: string;
     name: string;
-    avatarUrl?: User['avatarUrl'];
+    avatarUrl?: User["avatarUrl"];
   }[];
 };
 
 // Main ProjectCard component
 const ProjectCard = ({ id, title, dueDate, users, updatedAt }: Props) => {
   const { token } = theme.useToken();
+
+  const { edit } = useNavigation();
+
+  const { mutate: deleteCard } = useDelete();
 
   // Memoized dropdown menu items for card actions
   const dropdownItems = useMemo(() => {
@@ -49,7 +54,7 @@ const ProjectCard = ({ id, title, dueDate, users, updatedAt }: Props) => {
         icon: <EyeOutlined />,
         onClick: () => {
           // TODO Handle edit action
-          edit();
+          edit("tasks", id, "replace");
         },
       },
       {
@@ -58,7 +63,15 @@ const ProjectCard = ({ id, title, dueDate, users, updatedAt }: Props) => {
         danger: true,
         icon: <DeleteOutlined />,
         // Todo: Handle delete action
-        onClick: () => {},
+        onClick: () => {
+          deleteCard({
+            resource: "tasks",
+            meta: {
+              operation: "task",
+            },
+            id,
+          });
+        },
       },
     ];
 
@@ -77,9 +90,6 @@ const ProjectCard = ({ id, title, dueDate, users, updatedAt }: Props) => {
     };
   }, [dueDate]);
 
-  // TODO: Placeholder function for editing the card
-  const edit = () => {};
-
   return (
     <ConfigProvider
       theme={{
@@ -96,7 +106,7 @@ const ProjectCard = ({ id, title, dueDate, users, updatedAt }: Props) => {
       <Card
         size="small"
         title={<Text ellipsis={{ tooltip: title }}>{title}</Text>}
-        onClick={() => edit()} // Handle click on card to edit
+        onClick={() => edit} // Handle click on card to edit
         extra={
           <Dropdown
             trigger={["click"]}
