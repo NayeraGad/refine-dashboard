@@ -1,8 +1,8 @@
 import { UseDraggableArguments, useDroppable } from "@dnd-kit/core";
 import { Badge, Button, Space } from "antd";
 import React from "react";
-import { Text } from "../text";
 import { PlusOutlined } from "@ant-design/icons";
+import { Text } from "@/components/text";
 
 interface Props {
   id: string;

@@ -27,6 +27,8 @@ import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import { ColorModeContextProvider } from "./contexts/color-mode";
 import Layout from "./components/layout";
 import { resources } from "./config/Resources";
+import CreateTaskPage from "./pages/tasks/CreateTaskPage";
+import EditTaskPage from "./pages/tasks/EditTaskPage";
 
 function App() {
   return (
@@ -75,8 +77,11 @@ function App() {
                       <Route path="edit/:id" element={<EditPage />} />
                     </Route>
 
-                    <Route path="/tasks">
-                      <Route index element={<Tasks />} />
+                    <Route path="/tasks" element={<Tasks>
+                      <Outlet />
+                    </Tasks>}>
+                    <Route path="new" element={<CreateTaskPage />} />
+                    <Route path="edit/:id" element={<EditTaskPage />} />
                     </Route>
                   </Route>
                 </Routes>

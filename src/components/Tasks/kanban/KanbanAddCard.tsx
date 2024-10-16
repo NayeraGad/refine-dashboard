@@ -1,7 +1,7 @@
+import { Text } from "@/components/text";
 import { PlusSquareOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import React from "react";
-import { Text } from "../text";
 
 interface Props {
   onClick: () => void;

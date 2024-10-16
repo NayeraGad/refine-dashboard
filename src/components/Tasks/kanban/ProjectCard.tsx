@@ -10,19 +10,19 @@ import {
   theme,
   Tooltip,
 } from "antd";
-import { Text } from "../text";
 import {
   ClockCircleOutlined,
   DeleteOutlined,
   EyeOutlined,
   MoreOutlined,
 } from "@ant-design/icons";
-import { TextIcon } from "../TextIcon";
 import dayjs from "dayjs";
 import { getDateColor } from "@/Utilities";
-import CustomAvatar from "../CustomAvatar";
 import { User } from "@/graphql/schema.types";
 import { useDelete, useNavigation } from "@refinedev/core";
+import { Text } from "@/components/text";
+import { TextIcon } from "@/components/TextIcon";
+import CustomAvatar from "@/components/CustomAvatar";
 
 // Define the props type for the ProjectCard component
 type Props = {
@@ -106,12 +106,18 @@ const ProjectCard = ({ id, title, dueDate, users, updatedAt }: Props) => {
       <Card
         size="small"
         title={<Text ellipsis={{ tooltip: title }}>{title}</Text>}
-        onClick={() => edit} // Handle click on card to edit
+        onClick={() => edit('tasks', id, 'replace')} // Handle click on card to edit
         extra={
           <Dropdown
             trigger={["click"]}
             menu={{
               items: dropdownItems,
+              onPointerDown: (e) => {
+                e.stopPropagation()
+              },
+              onClick: (e) => {
+                e.domEvent.stopPropagation()
+              }
             }}
             placement="bottom"
             arrow={{ pointAtCenter: true }}

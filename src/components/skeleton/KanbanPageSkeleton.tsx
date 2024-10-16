@@ -1,4 +1,4 @@
-import { KanbanBoardContainer } from "../kanban/KanbanBoardContainer";
+import { KanbanBoardContainer } from "../Tasks/kanban/KanbanBoardContainer";
 import KanbanColumnSkeleton from "./kanban";
 import ProjectCardSkeleton from "./project-card";
 

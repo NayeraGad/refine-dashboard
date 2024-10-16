@@ -5,12 +5,22 @@ import DashboardTotalCountCards from "./homeComponents/DashboardTotalCountCards"
 import DashboardLatestActivities from "./homeComponents/DashboardLatestActivities";
 
 // Kanban
-import { KanbanBoardContainer } from "./kanban/KanbanBoardContainer";
-import { KanbanBoard } from "./kanban/KanbanBoardContainer";
-import KanbanColumn from "./kanban/KanbanColumn";
-import KanbanItem from "./kanban/KanbanItem";
-import ProjectCard from "./kanban/ProjectCard";
-import KanbanAddCard from "./kanban/KanbanAddCard";
+import { KanbanBoardContainer } from "./Tasks/kanban/KanbanBoardContainer";
+import { KanbanBoard } from "./Tasks/kanban/KanbanBoardContainer";
+import KanbanColumn from "./Tasks/kanban/KanbanColumn";
+import KanbanItem from "./Tasks/kanban/KanbanItem";
+import ProjectCard from "./Tasks/kanban/ProjectCard";
+import KanbanAddCard from "./Tasks/kanban/KanbanAddCard";
+
+// Tasks Form Components
+export * from "./Tasks/form/accordion";
+export * from "./Tasks/form/description";
+export * from "./Tasks/form/due-date";
+export * from "./Tasks/form/header";
+export * from "./Tasks/form/stage";
+export * from "./Tasks/form/title";
+export * from "./Tasks/form/user-tag";
+export * from "./Tasks/form/users";
 
 // Skeletons
 import AccordionHeaderSkeleton from "./skeleton/accordion-header";
@@ -29,6 +39,7 @@ export {
   KanbanColumn,
   KanbanItem,
   ProjectCard,
+  KanbanAddCard,
   AccordionHeaderSkeleton,
   KanbanColumnSkeleton,
   LatestActivitiesSkeleton,
